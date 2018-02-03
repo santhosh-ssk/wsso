@@ -5,7 +5,7 @@ from flask.ext.bootstrap import Bootstrap
 bootstrap=Bootstrap(app)
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return("<h1>hello-world</h1>")
 
 # Uncomment to add a new URL at /new
 

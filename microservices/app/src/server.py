@@ -1,7 +1,8 @@
 from src import app
 from flask import jsonify,render_template
 from flask.ext.bootstrap import Bootstrap
-
+import requests
+import json
 bootstrap=Bootstrap(app)
 @app.route("/")
 def home():

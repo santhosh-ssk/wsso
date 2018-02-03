@@ -50,7 +50,7 @@ def home():
 	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
 
 	# resp.content contains the json response.
-	print resp.content
+	#print resp.content
     return render_template("index.html")
 
 # Uncomment to add a new URL at /new

@@ -2,4 +2,5 @@ flask
 requests
 gunicorn
 flask-bootstrap
+requests
 # add new packages one per each line

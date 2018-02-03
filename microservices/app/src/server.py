@@ -1,4 +1,5 @@
 #from flask import Flask
+from src import app
 from flask import jsonify,render_template
 from flask.ext.bootstrap import Bootstrap
 import requests
@@ -6,6 +7,7 @@ import json
 #app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
+
 def home():
 	# This is the url to which the query is made
 	url = "https://data.annulment76.hasura-app.io/v1/query"
@@ -58,8 +60,12 @@ def home():
 	option=list()
 	for x in options:
 		option+=x	
-	#print(option)
+	
+
+
 	return render_template("index.html",option=option)
+
+	#print(option)
 	# resp.content contains the json response.
 	
 

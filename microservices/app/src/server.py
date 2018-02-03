@@ -1,8 +1,9 @@
-from src import app
+#from flask import Flask
 from flask import jsonify,render_template
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
+#app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
 def home():
@@ -48,13 +49,16 @@ def home():
 
 	# Make the query and store response in resp
 	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
-
+	return render_template("index.html")
 	# resp.content contains the json response.
 	#print resp.content
-    return render_template("index.html")
+    
 
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
 # def json_message():
 #     return jsonify(message="Hello World")
+"""
+if __name__ == __main__:
+	app.run(debug=true)"""

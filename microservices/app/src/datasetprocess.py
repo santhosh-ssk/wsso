@@ -192,65 +192,65 @@ url = "https://data.annulment76.hasura-app.io/v1/query"
 
 
 count=712
+for j in [i for i in range(2000,46500,500)]:
+    sending=list()
+    # This is the json payload for the query
+    for districsdata in datass[j:j+500]:
+        record=(dict(zip(columns,districsdata)))
+        #print(record.keys())
+        sending_data={
+                    "State": record["State"],
+                    "District": record["District"],
+                    "Block": record["Block"],
+                    "Panchayat": record["Panchayat"],
+                    "Village": record["Village"],
+                    "Habitation": record["Habitation"],
+                    "Location/SourceId & Main Scheme Name ": record["Location/SourceId & Main Scheme Name "],
+                    "Type of Source": record["Type of Source"],
+                    "Laboratory Name": record["Laboratory Name"],
+                    "Testing Date [DD/MM/YY]": record["Testing Date [DD/MM/YY]"],
+                    "Sample Number/ Name": record["Sample Number/ Name"],
+                    "Above Permissible Limit (Mandatory*)": str(record["Above Permissible Limit (Mandatory*)"]),
+                    "Below Permissible Limit (Mandatory*)": str(record["Below Permissible Limit (Mandatory*)"]),
+                    "Above Permissible Limit (Emerging /Other**)": str(record["Above Permissible Limit (Emerging /Other**)"]),
+                    "Below Permissible Limit (Emerging /Other**)": str(record["Below Permissible Limit (Emerging /Other**)"]),
+                    "Testid": record["Testid"],
+                    "Chloride":record["Chloride"],
+                    "Sulphates": record["Sulphates"],
+                    "E-Coli (MPN /100 Ml)": record["E-Coli (MPN /100 Ml)"],
+                    "Alkalinity": record["Alkalinity"],
+                    "Manganese": record["Manganese"],
+                    "Calcium": record["Calcium"],
+                    "Nitrate": record["Nitrate"],
+                    "Magnesium": record["Magnesium"],
+                    "Iron": record["Iron"],
+                    "Coliform": record["Coliform"],
+                    "TDS": record["TDS"],
+                    "Turbidity": record["Turbidity"],
+                    "Fluoride": record["Fluoride"],
+                    "pH": record["pH"],
+                    "Hardness": record["Hardness"]
+                    }
+        sending.append(sending_data)		    
+    requestPayload = {
+        "type": "insert",
+        "args": {
+            "table": "record",
+            "objects": sending
+        }
+    }
 
-# This is the json payload for the query
-for districsdata in datass[712:]:
-	record=(dict(zip(columns,districsdata)))
-	#print(record.keys())
-	requestPayload = {
-	    "type": "insert",
-	    "args": {
-	        "table": "record",
-	        "objects": [{
-	        	"State": record["State"],
-                "District": record["District"],
-                "Block": record["Block"],
-                "Panchayat": record["Panchayat"],
-                "Village": record["Village"],
-                "Habitation": record["Habitation"],
-                "Location/SourceId & Main Scheme Name ": record["Location/SourceId & Main Scheme Name "],
-                "Type of Source": record["Type of Source"],
-                "Laboratory Name": record["Laboratory Name"],
-                "Testing Date [DD/MM/YY]": record["Testing Date [DD/MM/YY]"],
-                "Sample Number/ Name": record["Sample Number/ Name"],
-                "Above Permissible Limit (Mandatory*)": str(record["Above Permissible Limit (Mandatory*)"]),
-                "Below Permissible Limit (Mandatory*)": str(record["Below Permissible Limit (Mandatory*)"]),
-                "Above Permissible Limit (Emerging /Other**)": str(record["Above Permissible Limit (Emerging /Other**)"]),
-                "Below Permissible Limit (Emerging /Other**)": str(record["Below Permissible Limit (Emerging /Other**)"]),
-                "Testid": record["Testid"],
-                "Chloride":record["Chloride"],
-                "Sulphates": record["Sulphates"],
-                "E-Coli (MPN /100 Ml)": record["E-Coli (MPN /100 Ml)"],
-                "Alkalinity": record["Alkalinity"],
-                "Manganese": record["Manganese"],
-                "Calcium": record["Calcium"],
-                "Nitrate": record["Nitrate"],
-                "Magnesium": record["Magnesium"],
-                "Iron": record["Iron"],
-                "Coliform": record["Coliform"],
-                "TDS": record["TDS"],
-                "Turbidity": record["Turbidity"],
-                "Fluoride": record["Fluoride"],
-                "pH": record["pH"],
-                "Hardness": record["Hardness"]
-                }
-	        ]
-	    }
-	}
 
+    # Setting headers
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+    }
+    # Make the query and store response in resp
+    resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
 
-	# Setting headers
-	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
-	}
-	# Make the query and store response in resp
-	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
-
-	# resp.content contains the json response.
-	print(resp.content)	
-	print(count)
-	count=count+1
-	#print(requestPayload)
-	
-	
+    # resp.content contains the json response.
+    print(resp.content)	
+    print(count)
+    count=count+500
+    #print(requestPayload)

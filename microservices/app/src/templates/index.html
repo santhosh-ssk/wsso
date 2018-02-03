@@ -75,7 +75,8 @@
 {%block head%}
 		{{super()}}
 		<script type="text/javascript" src="url_for('static',filename='js/Chart.min.js',_external=True)"></script>
-		<script type="text/javascript">
+		<script type="text/javascript" src="url_for('static',filename='js/jquery-1.12.4.min.js',_external=True)"></script>
+				<script type="text/javascript">
 				$(document).ready(function(){
 					alert("hi");
 				});

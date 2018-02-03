@@ -51,8 +51,9 @@
 					<div class="col-sm-8">
 						<input type="text" id="searchbox" class="form-control" placeholder="Enter Your Location" list="districts">
 						<datalist id="districts">
-							<option value="apple">apple</option>
-							<option value="ball">ball</option>
+							{%for data in option%}
+							<option value={{data}}>{{data}}</option>
+							{%endfor%}
 						</datalist>
 
 

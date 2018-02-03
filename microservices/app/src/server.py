@@ -49,10 +49,19 @@ def home():
 
 	# Make the query and store response in resp
 	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
-	return render_template("index.html")
+	options=json.loads(resp.content)
+	option=list()
+	for x in options:
+		print(type(x["result"]))
+		option+=x["result"]
+	options=option
+	option=list()
+	for x in options:
+		option+=x	
+	#print(option)
+	return render_template("index.html",option=option)
 	# resp.content contains the json response.
-	#print resp.content
-    
+	
 
 # Uncomment to add a new URL at /new
 
@@ -60,5 +69,5 @@ def home():
 # def json_message():
 #     return jsonify(message="Hello World")
 """
-if __name__ == __main__:
-	app.run(debug=true)"""
+if __name__ == "__main__":
+	app.run(debug=True)"""

@@ -1,0 +1,24 @@
+- args:
+    permission:
+      columns:
+      - Alkalinity
+      - Calcium
+      - Chloride
+      - Coliform
+      - E-Coli (MPN /100 Ml)
+      - Fluoride
+      - Hardness
+      - Iron
+      - Magnesium
+      - Manganese
+      - Nitrate
+      - Sample Number/ Name
+      - Sulphates
+      - TDS
+      - Turbidity
+      - "null"
+      - pH
+      filter: {}
+    role: anonymous
+    table: report
+  type: create_update_permission

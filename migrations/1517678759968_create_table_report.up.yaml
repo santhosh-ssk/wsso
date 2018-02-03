@@ -1,0 +1,17 @@
+- args:
+    sql: CREATE TABLE "report"("sno" serial NOT NULL, "State" text NOT NULL, "District"
+      text NOT NULL, "Block" text NOT NULL, "Panchayat" text NOT NULL, "Village" text
+      NOT NULL, "Habitation" text NOT NULL, "Location/SourceId & Main Scheme Name"
+      text NOT NULL, "Type of Source" text NOT NULL, "Laboratory Name" text NOT NULL,
+      "Testing Date [DD/MM/YY]" text NOT NULL, "Sample Number/ Name" text NOT NULL,
+      "Above Permissible Limit (Mandatory*)" text , "Below Permissible Limit (Mandatory*)"
+      text , "Above Permissible Limit (Emerging /Other**)" text , "Below Permissible
+      Limit (Emerging /Other**)" text , "Testid" text , "Chloride" text , "Sulphates"
+      text , "E-Coli (MPN /100 Ml)" text , "Alkalinity" text , "Manganese" text ,
+      "Calcium" text , "Nitrate" text , "Magnesium" text , "Iron" text , "Coliform"
+      text , "TDS" text , "Turbidity" text , "Fluoride" text , "pH" text , "Hardness"
+      text , "null" text , PRIMARY KEY ("State") )
+  type: run_sql
+- args:
+    name: report
+  type: add_existing_table_or_view

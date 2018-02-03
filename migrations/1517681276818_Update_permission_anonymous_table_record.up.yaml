@@ -1,0 +1,35 @@
+- args:
+    role: anonymous
+    table: record
+  type: drop_update_permission
+- args:
+    permission:
+      columns:
+      - Above Permissible Limit (Emerging /Other**)
+      - Above Permissible Limit (Mandatory*)
+      - Alkalinity
+      - Below Permissible Limit (Emerging /Other**)
+      - Below Permissible Limit (Mandatory*)
+      - Calcium
+      - Chloride
+      - Coliform
+      - E-Coli (MPN /100 Ml)
+      - Fluoride
+      - Hardness
+      - Iron
+      - Magnesium
+      - Manganese
+      - Nitrate
+      - S.No
+      - Sample Number/ Name
+      - Sulphates
+      - TDS
+      - Testid
+      - Testing Date [DD/MM/YY]
+      - Turbidity
+      - "null"
+      - pH
+      filter: {}
+    role: anonymous
+    table: record
+  type: create_update_permission

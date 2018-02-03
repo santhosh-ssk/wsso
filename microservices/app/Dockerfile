@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:2
 
 # install required debian packages
 # add any package that is required after `python-dev`, end the line with \
@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 # install requirements
 COPY src/requirements.txt /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
 # set /app as working directory
 WORKDIR /app

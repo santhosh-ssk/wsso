@@ -319,8 +319,8 @@ def login():
 	else:
 		return "false"
 
-@app.route("/api/v1/request/register",methods=['POST',"GET"])
-def login():
+@app.route("/api/v1/request/",methods=['POST',"GET"])
+def register():
 	json_data = request.get_json(force=True)
 	user= json_data['username']
 	psw= json_data['password']
@@ -364,4 +364,5 @@ def login():
 		return "false"
 """
 if __name__ == "__main__":
-	app.run(debug=True) """
+	app.run(debug=True)
+"""

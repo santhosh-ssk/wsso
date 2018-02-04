@@ -9,6 +9,8 @@ bootstrap=Bootstrap(app)
 @app.route("/")
 
 def home():
+	
+
 	# This is the url to which the query is made
 	url = "https://data.annulment76.hasura-app.io/v1/query"
 
@@ -54,16 +56,130 @@ def home():
 	options=json.loads(resp.content)
 	option=list()
 	for x in options:
-		print(type(x["result"]))
 		option+=x["result"]
 	options=option
 	option=list()
 	for x in options:
 		option+=x	
 	
+		# This is the url to which the query is made
+	url = "https://data.annulment76.hasura-app.io/v1/query"
 
+	# This is the json payload for the query
+	requestPayload = {
+	    "type": "bulk",
+	    "args": [
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Chloride\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Sulphates\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Alkalinity\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Manganese\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Calcium\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Magnesium\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Iron\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Coliform\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"TDS\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Turbidity\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Fluoride\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"pH\" from record;"
+	            }
+	        },
+	        {
+	            "type": "run_sql",
+	            "args": {
+	                "sql": "select  \"Hardness\" from record;"
+	            }
+	        }
+	        
+	    ]
+	}
 
-	return render_template("index.html",option=option)
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+	}
+
+	# Make the query and store response in resp
+	resp1 = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+	parameters=json.loads(resp1.content)
+	para=list()
+	for x in parameters:
+		safe=0
+		unsafe=0
+		for j in x["result"][1:]:
+			data=list(str(j[0]).split('@'))
+			if(len(data)>=2):
+				data=data[1]
+				if(data=="safe" or data=="permissible"):
+					safe+=1
+				else:
+					unsafe+=1
+			else:
+				continue
+		para.append([(x['result'][0][0]),safe,unsafe])
+	para_keys=[x[0] for x in para]
+	para_safe=[x[1] for x in para]
+	para_unsafe=[x[2] for x in para]
+	print(para_keys)
+	return render_template("index.html",option=option,para_keys=para_keys,para_safe=para_safe,para_unsafe=para_unsafe)
 
 	#print(option)
 	# resp.content contains the json response.
@@ -74,6 +190,83 @@ def home():
 # @app.route("/json")
 # def json_message():
 #     return jsonify(message="Hello World")
+@app.route("/api/v1/request/<name>",methods=['POST',"GET"])
+def request_data(name):
+	# This is the url to which the query is made
+	url = "https://data.annulment76.hasura-app.io/v1/query"
+
+	# This is the json payload for the query
+	requestPayload = {
+	    "type": "bulk",
+	    "args": [
+	        {
+	            "type": "select",
+	            "args": {
+	                "table": "record",
+	                "columns": [
+	                    "*"
+	                ],
+	                "where": {
+	                    "District": {
+	                        "$eq": name	                    }
+	                }
+	            }
+	        },
+	        {
+	            "type": "select",
+	            "args": {
+	                "table": "record",
+	                "columns": [
+	                    "*"
+	                ],
+	                "where": {
+	                    "Block": {
+	                        "$eq": name
+	                    }
+	                }
+	            }
+	        },
+	        {
+	            "type": "select",
+	            "args": {
+	                "table": "record",
+	                "columns": [
+	                    "*"
+	                ],
+	                "where": {
+	                    "Panchayat": {
+	                        "$eq": name	                    }
+	                }
+	            }
+	        },
+	        {
+	            "type": "select",
+	            "args": {
+	                "table": "record",
+	                "columns": [
+	                    "*"
+	                ],
+	                "where": {
+	                    "Village": {
+	                        "$eq": name	                    }
+	                }
+	            }
+	        }
+	    ]
+	}
+
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+	}
+
+	# Make the query and store response in resp
+	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+
+# resp.content contains the json response.
+	options=json.loads(resp.content)
+	return jsonify(options)
 """
 if __name__ == "__main__":
-	app.run(debug=True)"""
+	app.run(debug=True) """

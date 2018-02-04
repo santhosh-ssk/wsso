@@ -1,0 +1,11 @@
+- args:
+    permission:
+      columns:
+      - email
+      - password
+      - level
+      - name
+      filter: {}
+    role: anonymous
+    table: userdata
+  type: create_select_permission

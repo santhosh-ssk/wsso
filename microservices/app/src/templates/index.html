@@ -83,23 +83,24 @@
 		</div>
 		
 		<div class="col-sm-5" id="logintoggler" style="display: none;background-color:#999;color: white; ">
-			<div class="container" id="login form">
+			<div class="container" id="login_form">
 				<form>
 					<span style="margin-left:50px;"><h3>Login Form</h3></span>
 					<br>
 					<span><b>Email:&emsp;&emsp;</b></span><input type="text" id="email" style="margin-left: 57px;"><br>
 					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="Password" style="margin-left: 30px;">
-					<br><input type="submit" value="login"><br>
-					<button id="register_btn" onclick='registertoggle()'>Register</button><br>
+					<br><input type="submit" value="login" style="color: black;"><br>
+					<button id="register_btn" onclick='registertoggle()' style="margin-left: 300px;color: black;">Register</button><br>
 				</form>
 			</div>
 			<div class="container" id="Register_form" style="display: none;">
 				<form>
-					<span id="login_btn">Login</span>
-					<span>Email:&emsp;&emsp;</span><input type="text" id="Reg_email">
-					<br><span>Password:&emsp;&emsp;</span><input type="password" id="Reg_Password">
-					<br><span>Conformation Password:&emsp;&emsp;</span><input type="password" id="Reg_Cf_Password">
-					<br><center><input type="submit" value="login"></center><br>
+					<span style="margin-left:50px;"><h3>Registration Form</h3></span>
+					<br>
+					<span><b>Email:&emsp;&emsp;</b></span><input type="text" id="reg_email" style="margin-left: 57px;"><br>
+					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="reg_Password" style="margin-left: 30px;">
+					<br><input type="submit" value="Register" style="color: black;"><br>
+					<button id="register_btn" onclick='loginformtoggler()'  style="margin-left: 300px;color: black;">Login</button><br>
 					
 				</form>
 			</div>
@@ -123,7 +124,12 @@
 					$("#logintoggler").slideToggle()
 				}
 				function registertoggle(){
-					$("#logintoggler").toggle("slide")
+					$("#login_form").toggle("slide")
+					$("#Register_form").toggle("slide")
+				}
+				function loginformtoggler(){
+					$("#Register_form").toggle("slide")
+					$("#login_form").toggle("slide")
 				}
 				function requestdata(){
 					if( $("#searchbox").val() == '')

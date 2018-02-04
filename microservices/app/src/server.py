@@ -321,38 +321,11 @@ def login():
 
 @app.route("/api/v1/request/",methods=['POST',"GET"])
 def register():
-
-	# This is the url to which the query is made
-	url = "https://notify.annulment76.hasura-app.io/v1/send/email"
-
-	# This is the json payload for the query
-		# Make the query and store response in resp
-	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
-
-	# resp.content contains the json response.
-	print resp.content
 	json_data = request.get_json(force=True)
 	user= json_data['username']
 	psw= json_data['password']
 	level=json_data['level']
 	name=json_data['name']
-
-	requestPayload = {
-	    "to": user`,
-	    "from": "santhoshkumar.ssk3222@gmail.com",
-	    "fromName": "WSSO",
-	    "sub": "WSSO",
-	    "text": "This is the email content in plain text",
-	    "html": "<p>This is the <b>email content</b> in html format</p>"
-	}
-
-	# Setting headers
-	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer c13eee07dc87b8b77b11974f01e1b74c899d3afd3da7f279"
-	}
-
-
 
 	# This is the url to which the query is made
 	url = "https://data.annulment76.hasura-app.io/v1/query"

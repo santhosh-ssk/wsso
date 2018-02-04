@@ -315,7 +315,7 @@ def login():
 	resp=json.loads(resp.content)
 	# resp.content contains the json response.
 	if(len(resp)>=1):
-		return "true"
+		return render_template("docter.html")
 	else:
 		return "false"
 

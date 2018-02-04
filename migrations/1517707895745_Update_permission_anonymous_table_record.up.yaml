@@ -1,0 +1,45 @@
+- args:
+    role: anonymous
+    table: record
+  type: drop_select_permission
+- args:
+    permission:
+      columns:
+      - Above Permissible Limit (Emerging /Other**)
+      - Above Permissible Limit (Mandatory*)
+      - Alkalinity
+      - Below Permissible Limit (Emerging /Other**)
+      - Below Permissible Limit (Mandatory*)
+      - Block
+      - Calcium
+      - Chloride
+      - Coliform
+      - District
+      - E-Coli (MPN /100 Ml)
+      - Fluoride
+      - Habitation
+      - Hardness
+      - Iron
+      - Laboratory Name
+      - 'Location/SourceId & Main Scheme Name '
+      - Magnesium
+      - Manganese
+      - Nitrate
+      - Panchayat
+      - S.No
+      - Sample Number/ Name
+      - State
+      - Sulphates
+      - TDS
+      - Testid
+      - Testing Date [DD/MM/YY]
+      - Turbidity
+      - Type of Source
+      - Village
+      - "null"
+      - overall
+      - pH
+      filter: {}
+    role: anonymous
+    table: record
+  type: create_select_permission

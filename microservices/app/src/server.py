@@ -267,7 +267,11 @@ def request_data(name):
 # resp.content contains the json response.
 	options=json.loads(resp.content)
 	return jsonify(options)
-"""@app.route("/doctor")
+@app.route("/api/v1/request/login",,methods=['POST',"GET"])
+def login():
+	data=request.json
+	print(data)
+	return "fine"
 
 if __name__ == "__main__":
 	app.run(debug=True) """

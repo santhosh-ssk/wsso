@@ -19,7 +19,7 @@
 				<li><a href="/">Contact</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/" style="color: white;font-size: 20px">Login</a></li>
+				<li><a href="#" style="color: white;font-size: 20px" onclick="loginToggler()">Login</a></li>
 			</ul>
 		</div>
 	</div>
@@ -82,7 +82,28 @@
 		
 		</div>
 		
-		<div class="col-sm-5"></div>
+		<div class="col-sm-5" id="logintoggler" style="display: none;background-color:#999;color: white; ">
+			<div class="container" id="login form">
+				<form>
+					<span style="margin-left:50px;"><h3>Login Form</h3></span>
+					<br>
+					<span><b>Email:&emsp;&emsp;</b></span><input type="text" id="email" style="margin-left: 57px;"><br>
+					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="Password" style="margin-left: 30px;">
+					<br><input type="submit" value="login"><br>
+					<button id="register_btn" onclick='registertoggle()'>Register</button><br>
+				</form>
+			</div>
+			<div class="container" id="Register_form" style="display: none;">
+				<form>
+					<span id="login_btn">Login</span>
+					<span>Email:&emsp;&emsp;</span><input type="text" id="Reg_email">
+					<br><span>Password:&emsp;&emsp;</span><input type="password" id="Reg_Password">
+					<br><span>Conformation Password:&emsp;&emsp;</span><input type="password" id="Reg_Cf_Password">
+					<br><center><input type="submit" value="login"></center><br>
+					
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -98,6 +119,12 @@
 					var toggle_id="#"+var_id
 					$(toggle_id).slideToggle();
 				}
+				function loginToggler(){
+					$("#logintoggler").slideToggle()
+				}
+				function registertoggle(){
+					$("#logintoggler").toggle("slide")
+				}
 				function requestdata(){
 					if( $("#searchbox").val() == '')
 						alert("enter some district names")
@@ -107,6 +134,9 @@
 							$("#search_result").empty();
 							var searchdata=''
 							id_count=0;
+							values=[]
+							tags=['Calcium','Chloride','Coliform','E-Coli (MPN /100 Ml)','Fluoride','Hardness','Iron','Magnesium','Manganese','Nitrate','Sulphates','TDS','Turbidity','pH']
+											
 								for(i=0;i<4;i++){
 									if(result[i].length==0)
 										continue;
@@ -115,12 +145,44 @@
 										for(j=1;j<result[i].length;j++)
 										{
 											var colortag="";
-											if( result[i][j]["overall"]=="True")
-												colortag="<span style='background-color:lightgreen;'>Safe Water</span>";
-											else
-												colortag="<span style='background-color:red;color:white'>UnSafe Water</span>";
+											var problem='';
+											 
+											values[id_count]=[]
+											for(var tag=0;tag<tags.length;tag++){
+											values[id_count].push(((((result[i][j][tags[tag]]).split('@'))[0]).split(' '))[0]);}
 
-											searchdata+="<div class='container' style='border:1px solid black;'> \
+											if( result[i][j]["overall"]=="True"){
+												colortag="<span style='background-color:lightgreen;'>Safe Water</span>";
+												problem='<b>Safe to Drink Water</b>'
+												
+												}
+
+											else
+												{
+													colortag="<span style='background-color:red;color:white'>UnSafe Water</span>";
+
+													for(var tag=0;tag<tags.length;tag++)
+														if(((result[i][j][tags[tag]]).split('@')).length>=2)
+														{	var ans=(result[i][j][tags[tag]]).split('@');
+															if(ans[1]=="safe" || ans[1]=="permissible" || ans[1]=="permisible"){ 
+																continue;
+
+															}
+															else{
+																var ans=(result[i][j][tags[tag]]).split('@');
+																if(ans.length>=2)
+																	problem="<b>"+tags[tag]+" measurement: </b>"+ans[0]+"&emsp;&emsp;"+"<b>"+tags[tag]+" level: </b>"+ans[1];
+																if(ans.length>=3)
+																	problem+="<br><b>Side Effects due to "+tags[tag]+"</b> is "+ans[2]+"<br>";
+ 
+															}
+															
+														}
+
+
+												}
+
+												searchdata+="<div class='container' style='border:1px solid black;'> \
 																<div class='row'>\
 																	<div class='col-sm-12'>\
 																			<div class='col-sm-1'></div>\
@@ -139,20 +201,50 @@
 																					<div class='col-sm-3'><input type='button' value='Click' onclick='showdata(\""+id_count+"\")'></div>\
 																						\
 																				</div>\
-																				\
-																				\
 																			</div>\
 																			<br>\
 																	</div>\
 																</div>\
-																<div class='row' id='"+id_count+"' style='color:red;display:None;'>hi</div> \
+																<div class='row' id='"+id_count+"'style='color:red;display:None;'><div class='col-sm-4'>\<canvas id='"+id_count+"' width=\"100\" height=\"100\"></canvas>\
+																</div>\
+																<div class='col-sm-8'>"+problem+" \
+																</div>\
+															</div> \
 														</div>";
+														//alert(values[id_count])														
 														id_count+=1;
 										}
 									}
 								}
-							
-							$("#search_result").append(searchdata)
+							//alert(problem);
+							$("#search_result").append(searchdata);
+
+							/*for(var i=0;i<id_count;i++){
+								data_id=[]
+								label_id=[]
+								
+								for(j=0;j<tags.length;j++)
+									if(values[i][j]!="Not")
+									{
+										//alert(values[i][j])
+										data_id.push(parseFloat(values[i][j]))
+										label_id.push(tags[j])
+									}
+									ctx_id="#"+i;
+								var ctx = $(ctx_id);
+								var myDoughnutChart = new Chart(ctx, {
+								    type: 'doughnut',
+								    data: {
+										    datasets: [{
+										        data: data_id
+										    }],
+
+										    // These labels appear in the legend and in the tooltips when hovering different arcs
+										    labels: label_id
+										}
+								});
+
+							}*/
 						});
 					}
 				}

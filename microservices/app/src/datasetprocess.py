@@ -27,7 +27,7 @@ def checkparameters(key,parameter):
 		if(parameter>2000):
 			return ["high","Hardness, scaly deposits, sediment, cloudy colored water,staining, salty or bitter taste, corrosion of pipes and fittings","Reverse Osmosis, Distillation, deionization by ion exchange"]
 		elif(parameter>=500):
-			return ["permisible"]
+			return ["permissible"]
 		else:
 			return ["safe"]
 			
@@ -35,7 +35,7 @@ def checkparameters(key,parameter):
 		if(parameter>600):
 			return ["high","Scale in utensils and hot water system, soap scums","Water Softener Ion Exchanger , Reverse Osmosis"]
 		elif(parameter>=300):
-			return ["permisible"]
+			return ["permissible"]
 		else:
 			return ["safe"]
 
@@ -43,7 +43,7 @@ def checkparameters(key,parameter):
 		if(parameter>1.0):
 			return ["high","Brackish color, rusty sediment, bitter or metallic taste, brown-green stains, iron bacteria, discolored beverages","Oxidizing Filter , Green-sand Mechanical Filter"]
 		elif(parameter>0.35):
-			return ["permisible"]
+			return ["permissible"]
 		else:
 			return ["safe"]
 
@@ -106,17 +106,17 @@ def checkparameters(key,parameter):
 			return ["safe"]
 
 	elif(key=='Calcium'):
-		if(parameter>80000):
+		if(parameter>80):
 			return ["high","increases the level of disinfections with pathogens"]
-		elif(parameter>40000):
+		elif(parameter>40):
 			return ["safe"]
 		else:
 			return ["low","pain in kiddneys,low blood pressure","reverse osmosis"]
 	
 	elif(key=='Magnesium'):
-		if(parameter>30000):
+		if(parameter>150):
 			return ["high","it causes laxative effect"]
-		elif(parameter>20000):
+		elif(parameter>30):
 			return ["safe"]
 		else:
 			return ["low","sleep problems,hormone problems,muscle cramps,hyper tension","reverse osmosis"]
@@ -157,6 +157,8 @@ def data_seperate(index_list,testsample):
             parameters+=checkparameters(params[i][0],params[i][1])
             return("@".join(parameters[1:]))
     return "Not measured"
+
+
 para=['Chloride',
  'Sulphates',
  'E-Coli (MPN /100 Ml)',
@@ -174,6 +176,26 @@ para=['Chloride',
  'pH',
  'Hardness']
 
+
+
+def overall(index_list):
+    params=list()
+    for data in index_list:
+        data=str(data)
+        params=params +(data.split(","))
+    parameters=list()    
+    for i in range(0,len(params)):
+        if(params[i]=='nan'):
+            continue
+        else:
+            sample=params[i].split('[')
+            parameters.append((checkparameters(sample[0],sample[1].split("]")[0]))[0])     
+    if(("low" in parameters) or ("high" in parameters)):
+    	return 'False'
+    else:
+    	return 'True'
+
+df["overall"]=df.apply(lambda row: overall([row['Above Permissible Limit (Mandatory*)'],row['Below Permissible Limit (Mandatory*)'],row['Above Permissible Limit (Emerging /Other**)'],row['Below Permissible Limit (Emerging /Other**)']]),axis=1)
 for params in para:
     df[params]=df.apply(lambda row: data_seperate([row['Above Permissible Limit (Mandatory*)'],row['Below Permissible Limit (Mandatory*)'],row['Above Permissible Limit (Emerging /Other**)'],row['Below Permissible Limit (Emerging /Other**)']],params)
 ,axis=1)
@@ -191,8 +213,8 @@ print([len(df)," page loaded"])
 url = "https://data.annulment76.hasura-app.io/v1/query"
 
 
-count=712
-for j in [i for i in range(2000,46500,500)]:
+count=0
+for j in [i for i in range(0,46500,500)]:
     sending=list()
     # This is the json payload for the query
     for districsdata in datass[j:j+500]:
@@ -229,7 +251,8 @@ for j in [i for i in range(2000,46500,500)]:
                     "Turbidity": record["Turbidity"],
                     "Fluoride": record["Fluoride"],
                     "pH": record["pH"],
-                    "Hardness": record["Hardness"]
+                    "Hardness": record["Hardness"],
+                    "overall": record["overall"]
                     }
         sending.append(sending_data)		    
     requestPayload = {
@@ -253,4 +276,4 @@ for j in [i for i in range(2000,46500,500)]:
     print(resp.content)	
     print(count)
     count=count+500
-    #print(requestPayload)
+    #print(requestPayload)"""

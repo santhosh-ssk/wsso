@@ -1,6 +1,6 @@
 #from flask import Flask
 from src import app
-from flask import jsonify,render_template,request
+from flask import jsonify,render_template,request,redirect
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
@@ -315,10 +315,53 @@ def login():
 	resp=json.loads(resp.content)
 	# resp.content contains the json response.
 	if(len(resp)>=1):
-		return render_template("docter.html")
+		return true
 	else:
 		return "false"
 
+@app.route("/api/v1/request/register",methods=['POST',"GET"])
+def login():
+	json_data = request.get_json(force=True)
+	user= json_data['username']
+	psw= json_data['password']
+	level=json_data['level']
+	name=json_data['name']
+
+	# This is the url to which the query is made
+	url = "https://data.annulment76.hasura-app.io/v1/query"
+
+	# This is the json payload for the query
+	requestPayload = {
+	    "type": "insert",
+	    "args": {
+	        "table": "userdata",
+	        "objects": [
+	            {
+	                "email": user,
+	                "password": psw,
+	                "auth": "true",
+	                "name": name,
+	                "level": level
+	            }
+	        ]
+	    }
+	}
+
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer c13eee07dc87b8b77b11974f01e1b74c899d3afd3da7f279"
+	}
+
+	# Make the query and store response in resp
+	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+
+	# resp.content contains the json response.
+	resp=json.loads(resp.content)
+	if(len(resp)>=1):
+		return true
+	else:
+		return "false"
 """
 if __name__ == "__main__":
 	app.run(debug=True) """

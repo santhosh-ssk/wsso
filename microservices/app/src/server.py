@@ -1,10 +1,10 @@
-from flask import Flask
-#from src import app
+#from flask import Flask
+from src import app
 from flask import jsonify,render_template
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
-app=Flask(__name__)
+#app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
 
@@ -267,6 +267,7 @@ def request_data(name):
 # resp.content contains the json response.
 	options=json.loads(resp.content)
 	return jsonify(options)
+"""@app.route("/doctor")
 
 if __name__ == "__main__":
-	app.run(debug=True) 
+	app.run(debug=True) """

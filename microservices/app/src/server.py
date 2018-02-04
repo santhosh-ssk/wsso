@@ -1,10 +1,10 @@
-#from flask import Flask
-from src import app
-from flask import jsonify,render_template
+from flask import Flask
+#from src import app
+from flask import jsonify,render_template,request
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
-#app=Flask(__name__)
+app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
 
@@ -267,11 +267,58 @@ def request_data(name):
 # resp.content contains the json response.
 	options=json.loads(resp.content)
 	return jsonify(options)
-@app.route("/api/v1/request/login",,methods=['POST',"GET"])
+@app.route("/api/v1/request/login",methods=['POST',"GET"])
 def login():
-	data=request.json
-	print(data)
-	return "fine"
+	json_data = request.get_json(force=True)
+	user= json_data['username']
+	psw= json_data['password']
+	url = "https://data.annulment76.hasura-app.io/v1/query"
+
+	# This is the json payload for the query
+	requestPayload = {
+	    "type": "select",
+	    "args": {
+	        "table": "userdata",
+	        "columns": [
+	            "email","level","name"
+	        ],
+	        "where": {
+	            "$and": [
+	                {
+	                    "email": {
+	                        "$eq": user
+	                    }
+	                },
+	                {
+	                    "password": {
+	                        "$eq":psw
+	                    }
+	                },
+	                {
+	                    "auth": {
+	                        "$eq": "True"
+	                    }
+	                }
+	            ]
+	        }
+	    }
+	}
+
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer 53c56d1e6c312c79c8a45a56aab27bf15be2c96d346bd5f4"
+	}
+
+	# Make the query and store response in resp
+	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+	resp=json.loads(resp.content)
+	# resp.content contains the json response.
+	if(len(resp)>=1):
+		return "true"
+	else:
+		return "false"
+
 
 if __name__ == "__main__":
-	app.run(debug=True) """
+	app.run(debug=True) 

@@ -89,7 +89,7 @@
 					<br>
 					<span><b>Email:&emsp;&emsp;</b></span><input type="text" id="email" style="margin-left: 57pxcolor: black;;color: black;"><br>
 					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="Password" style="margin-left: 30px;color: black;">
-					<br><input type="submit" value="login" style="color: black; onclick="loginformdata()"><br>
+					<br><input type="submit" value="login" style="color: black;" onclick="loginformdata()"><br>
 					<button id="register_btn" onclick='registertoggle()' style="margin-left: 300px;color: black;">Register</button><br>
 				</form>
 			</div>
@@ -101,7 +101,7 @@
 					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="reg_Password" style="margin-left: 30px;color: black;">
 					<br>Level:<select style="color: black;"><option>District</option><option>Block</option><option>Villages</option><option>Villages</option>Habitation</select> <input type="text" placeholder="enter the name" id="level"><br>
 					<br><input type="submit" value="Register" style="color: black;"><br>
-					<button id="register_btn" onclick='loginformtoggler()'  style="margin-left: 300px;color: black;">Login</button><br>
+					<button id="login_btn" onclick='loginformtoggler()'  style="margin-left: 300px;color: black;">Login</button><br>
 					
 				</form>
 			</div>
@@ -132,15 +132,17 @@
 					$("#Register_form").toggle("slide")
 					$("#login_form").toggle("slide")
 				}
-				funcction loginformdata(){
+				function loginformdata(){
+					
 					var userid=$("#email").val();
-					var password=$("#password").val();
+					var password=$("#Password").val();
 					if(userid==''){ alert("username is empty");
 					return;}
 					else if(password==''){ alert("password is empty");
 					return;}
 					else{
-						$.post("/api/v1/request","{'username':"+userid+",'password':"+password+"}",function(result){
+						var dataset='{"username":"'+userid+'","password":"'+password+'"}'
+						$.post("/api/v1/request/login",dataset,function(result){
 							alert(result);
 						});
 					}

@@ -1,10 +1,10 @@
-from flask import Flask
-#from src import app
+#from flask import Flask
+from src import app
 from flask import jsonify,render_template,request
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
-app=Flask(__name__)
+#app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
 
@@ -319,6 +319,6 @@ def login():
 	else:
 		return "false"
 
-
+"""
 if __name__ == "__main__":
-	app.run(debug=True) 
+	app.run(debug=True) """

@@ -358,11 +358,82 @@ def register():
 
 	# resp.content contains the json response.
 	resp=json.loads(resp.content)
+
+	# This is the json payload for the query
+	requestPayload = {
+	    "type": "select",
+	    "args": {
+	        "table": "record",
+	        "columns": [
+	            "*"
+	        ],
+	        "where": {
+	            level: {
+	                "$eq": name
+	            }
+	        }
+	    }
+	}
+
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json"
+	}
+
+	# Make the query and store response in resp
+	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+
+	# resp.content contains the json response.
+	resp=json.loads(resp.content)
 	if(len(resp)>=1):
 		return true
 	else:
-		return "false"
+		return "false" 
 """
 if __name__ == "__main__":
 	app.run(debug=True)
+
+
+	requestPayload = {
+	    "to": user,
+	    "from": "santhoshkumar.ssk54@gmail.com",
+	    "fromName": "WSSO",
+	    "sub": "Report on "+name+" "+level,
+	    "text": "This is the email content in plain text",
+	    "html": "<p>This is the <b>email content</b> in html format</p>"
+	}
+
+	# Setting headers
+	headers = {
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	# Make the query and store response in resp
+	
+
+
+
+
+	resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+
+	# resp.content contains the json response.
+	print resp.content
+
 """
+	

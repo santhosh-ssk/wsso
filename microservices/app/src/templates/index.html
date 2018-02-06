@@ -67,7 +67,7 @@
 						<canvas id="myChart" width="400" height="300"></canvas>	
 					</div>
 					<div class="col-sm-6">
-						
+						<div id="map"></div>
 					</div>
 					
 				</div>
@@ -99,8 +99,8 @@
 					<br>
 					<span><b>Email:&emsp;&emsp;</b></span><input type="text" id="reg_email" style="margin-left: 57px;color: black;"><br>
 					<br><span><b>Password:</b>&emsp;&emsp;</span><input type="password" id="reg_Password" style="margin-left: 30px;color: black;">
-					<br>Level:<select style="color: black;" id="reg_level"><option value="District">District</option><option value="Block">Block</option><option value="Villages">Villages</option><option value="Villages">Villages</option><option value="Habitation">Habitation</option></select> <input type="text" placeholder="enter the name" id="reg_name"><br>
-					<br><input type="submit" value="Register" style="color: black;"><br>
+					<br>Level:<select style="color: black;" id="reg_level"><option value="District">District</option><option value="Block">Block</option><option value="Villages">Villages</option><option value="Villages">Villages</option><option value="Habitation">Habitation</option></select> <input type="text" placeholder="enter the name" id="reg_name" style="color: black;"><br>
+					<br><input type="submit" value="Register" style="color: black;" onclick="registerformdata()"><br>
 					<button id="login_btn" onclick='loginformtoggler()'  style="margin-left: 300px;color: black;">Login</button><br>
 					
 				</form>
@@ -108,14 +108,27 @@
 		</div>
 	</div>
 </div>
-
-
+<script src="https://apis.mapmyindia.com/advancedmaps/v1/k5kht6g6yu5hugu357uvlloevhutn1a7/map_load?v=0.1"></script>
 {%endblock%}
 
 {%block head%}
 		{{super()}}
+		<style>
+			 #map {
+				  height: 400px;
+				  width: 100%;
+				 }
+		</style>
 		<script type="text/javascript" src='static/js/Chart.min.js'></script>
 		<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+				    <script>
+				    $(document).ready(function(){
+				    	var map=new MapmyIndia.Map("map",{ center:[21.278, 81.866],zoom: 6,hybrid:true });
+				    	L.marker([21.278, 81.866]).addTo(map);
+				    });
+					   
+
+				  </script>
 				<script type="text/javascript">
 				function showdata(var_id){
 					var toggle_id="#"+var_id
@@ -149,8 +162,13 @@
 					}
 
 				}
+				var dynamicColors = function() {
+					var r = Math.floor(Math.random() *60+180);
+					var g = Math.floor(Math.random() *60+180);
+					var b = Math.floor(Math.random() *0+255);
+					return "rgb(" + r + "," + g + "," + b + ")";
+					}
 				function registerformdata(){
-					
 					var userid=$("#reg_email").val();
 					var password=$("#reg_Password").val();
 					var level=$("#reg_level").val()
@@ -239,7 +257,8 @@
 																				<div class='row'>\
 																					<div class='col-sm-3'><b>Type of Source: </b>"+result[i][j]["Type of Source"]+"</div>\
 																					<div class='col-sm-3'><b>Location/SourceId & Main Scheme Name : </b>"+result[i][j]["Location/SourceId & Main Scheme Name"]+"</div>\
-																					<div class='col-sm-3'></div>\
+																					<div class='col-sm-3'>\
+																					<b>Testing Date:</b>"+result[i][j]["Testing Date [DD/MM/YY]"]+"</div>\
 																					<div class='col-sm-3'><input type='button' value='Click' onclick='showdata(\""+id_count+"\")'></div>\
 																						\
 																				</div>\
@@ -247,7 +266,7 @@
 																			<br>\
 																	</div>\
 																</div>\
-																<div class='row' id='"+id_count+"'style='color:red;display:None;'><div class='col-sm-4'>\<canvas id='"+id_count+"' width=\"100\" height=\"100\"></canvas>\
+																<div class='row' id='"+id_count+"'style='color:red;display:None;'><div class='col-sm-4'>\<canvas id='canvas"+id_count+"' width=\"\   100\"height=\"100\"></canvas>\
 																</div>\
 																<div class='col-sm-8'>"+problem+" \
 																</div>\
@@ -261,24 +280,29 @@
 							//alert(problem);
 							$("#search_result").append(searchdata);
 
-							/*for(var i=0;i<id_count;i++){
+							for(var i=0;i<id_count;i++){
 								data_id=[]
 								label_id=[]
+								bgclr=[]
 								
 								for(j=0;j<tags.length;j++)
 									if(values[i][j]!="Not")
 									{
 										//alert(values[i][j])
-										data_id.push(parseFloat(values[i][j]))
-										label_id.push(tags[j])
+										data_id.push(parseFloat(values[i][j]));
+										label_id.push(tags[j]);
+										bgclr.push(dynamicColors());
 									}
-									ctx_id="#"+i;
+									ctx_id="#canvas"+i;
 								var ctx = $(ctx_id);
 								var myDoughnutChart = new Chart(ctx, {
 								    type: 'doughnut',
 								    data: {
 										    datasets: [{
-										        data: data_id
+										        data: data_id,
+										    backgroundColor: bgclr,
+								            strokeColor: dynamicColors(),
+								            pointColor: dynamicColors()
 										    }],
 
 										    // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -286,7 +310,7 @@
 										}
 								});
 
-							}*/
+							}
 						});
 					}
 				}
@@ -310,13 +334,6 @@
 									 	var myChart = new Chart(ctx, {
 										    type: 'bar',
 										    data: {
-										    	title: {
-										            display: true,
-										            position: "top",
-										            text: "Bar Graph",
-										            fontSize: 18,
-										            fontColor: "#111"
-										        },
 										        labels: para_keys,
 										        datasets: [{
 										            label: 'Safe',
@@ -334,6 +351,26 @@
                 
 
 										        }]
+										    },options:{
+										    	scales:{
+										    		yAxes:[{
+										    			scaleLabel:{
+										    				display:true,
+										    				labelString:'No of Blocks/Villages'
+										    			}
+
+										    		}],
+										    		xAxes:[{
+										    			scaleLabel:{
+										    				display:true,
+										    				labelString:'Chemical Parameters'
+										    			},
+										    		
+										    		}],title: {
+												            display: true,
+												            text: 'Bar Graph'
+												        }
+										    	}
 										    }
 										});
 										});

@@ -7,6 +7,7 @@
 
 ## dataset
 	The dataset is collected from the Ministry of Drinking Water & sanitation 
+
 http://indiawater.gov.in/imisreports/NRDWPMain.aspx?aspxerrorpath=imisreports/Reports/WaterQuality/rpt_WQM_SampleTesting_List.aspx. 
 
 ## Technical Platforms used:

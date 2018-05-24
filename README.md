@@ -8,7 +8,9 @@ The dataset is collected from the Ministry of Drinking Water & sanitation
 http://indiawater.gov.in/imisreports/NRDWPMain.aspx?aspxerrorpath=imisreports/Reports/WaterQuality/rpt_WQM_SampleTesting_List.aspx. 
 
 ## Technical Platforms used:
-python-Flask,Python-Selenium.
+	Frontend:Bootstrap,jquery.
+	Backend: python-Flask.
+	Other tech used: Python-Selenium.
 ## Hosting:
 Hasura web Hosting is used to host our project,and we have used hasura psql as our database.
 

@@ -1,10 +1,10 @@
 # welcome to WSSO( safe water and sanitation project) To veiw the website click on https://app.biblical52.hasura-app.io/
 
 # Objective
-The Object of this Project is to provide detailed information about the water, this project allows user to to veiw the status of a various dring water sources at a particular location.
+	The Object of this Project is to provide detailed information about the water, this project allows user to to veiw the status of a various dring water sources at a particular location.
 
 ## dataset
-The dataset is collected from the Ministry of Drinking Water & sanitation 
+	The dataset is collected from the Ministry of Drinking Water & sanitation 
 http://indiawater.gov.in/imisreports/NRDWPMain.aspx?aspxerrorpath=imisreports/Reports/WaterQuality/rpt_WQM_SampleTesting_List.aspx. 
 
 ## Technical Platforms used:
@@ -12,5 +12,5 @@ http://indiawater.gov.in/imisreports/NRDWPMain.aspx?aspxerrorpath=imisreports/Re
 	Backend: python-Flask.
 	Other tech used: Python-Selenium.
 ## Hosting:
-Hasura web Hosting is used to host our project,and we have used hasura psql as our database.
+	Hasura web Hosting is used to host our project,and we have used hasura psql as our database.
 

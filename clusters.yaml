@@ -1,7 +1,7 @@
 - alias: hasura
   config:
     configmap: controller-conf
-    namespace: hasura
+    namespace: biblical52-hasura
   data: null
-  kubeContext: annulment76
-  name: annulment76
+  kubeContext: biblical52
+  name: biblical52

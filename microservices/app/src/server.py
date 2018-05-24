@@ -12,7 +12,7 @@ def home():
 	
 
 	# This is the url to which the query is made
-	url = "https://data.annulment76.hasura-app.io/v1/query"
+	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
@@ -47,8 +47,9 @@ def home():
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+	    "X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
@@ -63,7 +64,7 @@ def home():
 		option+=x	
 	
 		# This is the url to which the query is made
-	url = "https://data.annulment76.hasura-app.io/v1/query"
+	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
@@ -153,8 +154,9 @@ def home():
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
@@ -193,7 +195,7 @@ def home():
 @app.route("/api/v1/request/<name>",methods=['POST',"GET"])
 def request_data(name):
 	# This is the url to which the query is made
-	url = "https://data.annulment76.hasura-app.io/v1/query"
+	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
@@ -257,8 +259,9 @@ def request_data(name):
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
+ 	   "Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
@@ -272,7 +275,7 @@ def login():
 	json_data = request.get_json(force=True)
 	user= json_data['username']
 	psw= json_data['password']
-	url = "https://data.annulment76.hasura-app.io/v1/query"
+	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
@@ -306,8 +309,9 @@ def login():
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer 53c56d1e6c312c79c8a45a56aab27bf15be2c96d346bd5f4"
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
@@ -328,7 +332,7 @@ def register():
 	name=json_data['name']
 
 	# This is the url to which the query is made
-	url = "https://data.annulment76.hasura-app.io/v1/query"
+	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
@@ -349,8 +353,9 @@ def register():
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json",
-	    "Authorization": "Bearer c13eee07dc87b8b77b11974f01e1b74c899d3afd3da7f279"
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
@@ -377,7 +382,9 @@ def register():
 
 	# Setting headers
 	headers = {
-	    "Content-Type": "application/json"
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp

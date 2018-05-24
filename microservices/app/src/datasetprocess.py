@@ -3,7 +3,7 @@ import numpy as np
 
 
 
-df=pd.read_csv("/home/santhosh/codeutsava/dataset/report.csv",header=None)
+df=pd.read_csv("/home/santhosh/projects/codeutsava/dataset/report.csv",header=None)
 columns=["S.No",'State','District','Block','Panchayat','Village','Habitation','Location/SourceId & Main Scheme Name ','Type of Source','Laboratory Name','Testing Date [DD/MM/YY]','Sample Number/ Name','Above Permissible Limit (Mandatory*)','Below Permissible Limit (Mandatory*)','Above Permissible Limit (Emerging /Other**)','Below Permissible Limit (Emerging /Other**)','Testid']
 df.columns=columns
 df=df[np.isnan(df['S.No'])==False]
@@ -210,7 +210,7 @@ datass=df[columns].values.tolist()
 print([len(df)," page loaded"])
 
 # This is the url to which the query is made
-url = "https://data.annulment76.hasura-app.io/v1/query"
+url = "https://data.biblical52.hasura-app.io/v1/query"
 
 
 count=0
@@ -266,9 +266,10 @@ for j in [i for i in range(0,46500,500)]:
 
     # Setting headers
     headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer 60bcda7f858ca2dd9d5cf503cdb7aeeafcc997f6c469c66a"
-    }
+    	"Content-Type": "application/json",
+    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+    	"X-Hasura-Role": "admin"	
+	}
     # Make the query and store response in resp
     resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
 

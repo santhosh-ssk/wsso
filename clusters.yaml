@@ -1,7 +1,6 @@
+clusters:
 - alias: hasura
-  config:
-    configmap: controller-conf
-    namespace: biblical52-hasura
   data: null
-  kubeContext: biblical52
-  name: biblical52
+  infra:
+    provider: hasura-free
+version: v1

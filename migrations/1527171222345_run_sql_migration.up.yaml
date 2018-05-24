@@ -1,0 +1,3 @@
+- args:
+    sql: drop table report;
+  type: run_sql

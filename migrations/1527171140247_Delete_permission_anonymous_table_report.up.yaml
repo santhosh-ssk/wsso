@@ -1,0 +1,4 @@
+- args:
+    role: anonymous
+    table: report
+  type: drop_select_permission

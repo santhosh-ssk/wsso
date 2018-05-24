@@ -1,10 +1,11 @@
-#from flask import Flask
-from src import app
+from flask import Flask
+#from src import app
+
 from flask import jsonify,render_template,request,redirect
-from flask.ext.bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 import requests
 import json
-#app=Flask(__name__)
+app=Flask(__name__)
 bootstrap=Bootstrap(app)
 @app.route("/")
 
@@ -63,123 +64,40 @@ def home():
 	for x in options:
 		option+=x	
 	
-		# This is the url to which the query is made
+
+	# This is the url to which the query is made
 	url = "https://data.biblical52.hasura-app.io/v1/query"
 
 	# This is the json payload for the query
 	requestPayload = {
-	    "type": "bulk",
-	    "args": [
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Chloride\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Sulphates\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Alkalinity\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Manganese\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Calcium\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Magnesium\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Iron\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Coliform\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"TDS\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Turbidity\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Fluoride\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"pH\" from record;"
-	            }
-	        },
-	        {
-	            "type": "run_sql",
-	            "args": {
-	                "sql": "select  \"Hardness\" from record;"
-	            }
-	        }
-	        
-	    ]
+	    "type": "select",
+	    "args": {
+	        "table": "report",
+	        "columns": [
+	            "*"
+	        ]
+	    }
 	}
 
 	# Setting headers
 	headers = {
-    	"Content-Type": "application/json",
-    	"Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
-    	"X-Hasura-Role": "admin"
+	    "Content-Type": "application/json",
+	    "Authorization": "Bearer e2dc21035e06649e102be8d7d95601db5ce69da9115767fa",
+	    "X-Hasura-Role": "admin"
 	}
 
 	# Make the query and store response in resp
 	resp1 = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
 	parameters=json.loads(resp1.content)
-	para=list()
-	for x in parameters:
-		safe=0
-		unsafe=0
-		for j in x["result"][1:]:
-			data=list(str(j[0]).split('@'))
-			if(len(data)>=2):
-				data=data[1]
-				if(data=="safe" or data=="permissible"):
-					safe+=1
-				else:
-					unsafe+=1
-			else:
-				continue
-		para.append([(x['result'][0][0]),safe,unsafe])
-	para_keys=[x[0] for x in para]
-	para_safe=[x[1] for x in para]
-	para_unsafe=[x[2] for x in para]
+	para_keys=list(parameters[0].keys())
+	print(para_keys)
+	para_keys.remove('status')
+	para_keys.remove('sno')
+	for i in range(0,len(parameters)):
+		if(parameters[i]["status"]=="safe"):
+			para_safe=[parameters[i][key] for key in para_keys]
+		else:
+			para_unsafe=[parameters[i][key] for key in para_keys]
 	print(para_keys)
 	return render_template("index.html",option=option,para_keys=para_keys,para_safe=para_safe,para_unsafe=para_unsafe)
 
@@ -396,11 +314,11 @@ def register():
 		return true
 	else:
 		return "false" 
-"""
+
 if __name__ == "__main__":
 	app.run(debug=True)
 
-
+"""
 	requestPayload = {
 	    "to": user,
 	    "from": "santhoshkumar.ssk54@gmail.com",

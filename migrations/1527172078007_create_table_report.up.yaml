@@ -1,0 +1,11 @@
+- args:
+    sql: CREATE TABLE "report"("sno" serial NOT NULL, "status" text NOT NULL, "Chloride"
+      text NOT NULL, "Sulphates" text NOT NULL, "E_Coli" text NOT NULL, "Alkalinity"
+      text NOT NULL, "Manganese" text NOT NULL, "Calcium" text NOT NULL, "Nitrate"
+      text NOT NULL, "Magnesium" text NOT NULL, "Iron" text NOT NULL, "Coliform" text
+      NOT NULL, "TDS" text NOT NULL, "Turbidity" text NOT NULL, "Fluoride" text NOT
+      NULL, "pH" text NOT NULL, "Hardness" text NOT NULL, PRIMARY KEY ("sno") )
+  type: run_sql
+- args:
+    name: report
+  type: add_existing_table_or_view
